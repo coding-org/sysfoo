@@ -9,9 +9,21 @@ pipeline {
     }
 
     stage('test') {
-      steps {
-        echo 'test maven app'
-        sh 'mvn clean test'
+      parallel {
+        stage('test') {
+          steps {
+            echo 'test maven app'
+            sh 'mvn clean test'
+          }
+        }
+
+        stage('integration-tests') {
+          steps {
+            echo 'i am integration tests'
+            sleep 5
+          }
+        }
+
       }
     }
 
