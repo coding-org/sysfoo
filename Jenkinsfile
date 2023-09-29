@@ -42,6 +42,6 @@ pipeline {
   }
   options {
     timeout(time: 20, unit: 'SECONDS')
-    retry(2)
+    retry(3)
   }
 }
