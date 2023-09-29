@@ -21,7 +21,13 @@ pipeline {
           steps {
             echo 'i am integration tests'
             sleep 5
-            fileExists './src/main/webapp/assets/textfil2.txt'
+            script {
+              if (fileExists('src/main/webapp/assets/text1.txt')) {
+                  echo "File found!"
+              } else {
+                  error 'Required file not found!'
+              }
+            }
             isUnix()
           }
         }
