@@ -22,6 +22,7 @@ pipeline {
             echo 'i am integration tests'
             sleep 5
             fileExists './src/main/webapp/assets/textfil2.txt'
+            isUnix()
           }
         }
 
