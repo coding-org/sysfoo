@@ -15,7 +15,7 @@ pipeline {
 
     stage('test') {
       parallel {
-        stage('test') {
+        stage('unit-tests') {
           steps {
             echo 'test maven app'
             sh 'mvn clean test'
@@ -50,9 +50,7 @@ pipeline {
     }
 
   }
- 
   options {
-    // timeout(time: 20, unit: 'SECONDS')
     retry(2)
   }
 }
