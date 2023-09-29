@@ -14,7 +14,6 @@ pipeline {
           steps {
             echo 'test maven app'
             sh 'mvn clean test'
-            error 'test failure!'
           }
         }
 
