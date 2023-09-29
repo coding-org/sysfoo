@@ -20,7 +20,6 @@ pipeline {
           steps {
             echo 'test maven app'
             sh 'mvn clean test'
-            exit -1
           }
         }
 
