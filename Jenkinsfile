@@ -50,11 +50,9 @@ pipeline {
     }
 
   }
-  tools {
-    maven 'Maven 3.6.3'
-  }
+ 
   options {
-    timeout(time: 20, unit: 'SECONDS')
-    retry(3)
+    // timeout(time: 20, unit: 'SECONDS')
+    retry(2)
   }
 }
