@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   options {
-        timeout(time: 10, unit: 'SECONDS')
+        timeout(time: 20, unit: 'SECONDS')
         retry(2)
     }
   
