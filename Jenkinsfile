@@ -22,7 +22,7 @@ pipeline {
             echo 'i am integration tests'
             sleep 5
             script {
-              if (fileExists('src/main/webapp/assets/text1.txt')) {
+              if (fileExists('src/main/webapp/assets/textfile.txt')) {
                   echo "File found!"
               } else {
                   error 'Required file not found!'
