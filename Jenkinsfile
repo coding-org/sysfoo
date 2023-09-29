@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'maven:3.6.3-jdk-11-slim'
+    }
+
+  }
   stages {
     stage('build') {
       steps {
@@ -23,11 +28,12 @@ pipeline {
             sleep 5
             script {
               if (fileExists('src/main/webapp/assets/textfile.txt')) {
-                  echo "File found!"
+                echo "File found!"
               } else {
-                  error 'Required file not found!'
+                error 'Required file not found!'
               }
             }
+
             isUnix()
           }
         }
