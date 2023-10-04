@@ -1,12 +1,13 @@
 pipeline {
-  agent {
-    docker {
-      image 'maven:3.6.3-jdk-11-slim'
-    }
-
-  }
+  agent none
   stages {
     stage('build') {
+      agent {
+        docker {
+          image 'maven:3.6.3-jdk-11-slim'
+        }
+
+      }
       steps {
         echo 'compile maven app'
         sh 'mvn compile'
@@ -16,6 +17,12 @@ pipeline {
     stage('test') {
       parallel {
         stage('unit-tests') {
+          agent {
+            docker {
+              image 'maven:3.6.3-jdk-11-slim'
+            }
+
+          }
           steps {
             echo 'test maven app'
             sh 'mvn clean test'
@@ -23,6 +30,12 @@ pipeline {
         }
 
         stage('integration-tests') {
+          agent {
+            docker {
+              image 'maven:3.6.3-jdk-11-slim'
+            }
+
+          }
           steps {
             echo 'i am integration tests'
             sleep 5
@@ -42,10 +55,36 @@ pipeline {
     }
 
     stage('package') {
-      steps {
-        echo 'package maven app'
-        sh 'mvn package -DskipTests'
-        archiveArtifacts 'target/*.war'
+      parallel {
+        stage('package') {
+          agent {
+            docker {
+              image 'maven:3.6.3-jdk-11-slim'
+            }
+
+          }
+          steps {
+            echo 'package maven app'
+            sh 'mvn package -DskipTests'
+            archiveArtifacts 'target/*.war'
+          }
+        }
+
+        stage('build & package') {
+          agent any
+          steps {
+            script {
+              docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin') {
+                def dockerImage = docker.build("guptakunal/sysfoo:v${env.BUILD_ID}", "./")
+                dockerImage.push()
+                dockerImage.push("latest")
+                dockerImage.push("dev")
+              }
+            }
+
+          }
+        }
+
       }
     }
 
