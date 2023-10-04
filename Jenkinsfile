@@ -56,7 +56,7 @@ pipeline {
 
     stage('package') {
       when {
-                branch 'master'
+        branch 'master'
       }
       parallel {
         stage('package') {
@@ -88,6 +88,12 @@ pipeline {
           }
         }
 
+      }
+    }
+
+    stage('Deploy to Dev') {
+      steps {
+        sh 'docker-compose up -d'
       }
     }
 
